@@ -121,9 +121,14 @@ if fqdn
   ohai 'reload_hostname' do
     plugin 'hostname'
   end
+<<<<<<< 29bd606b149acf84927d485d644ec95864bd6edc
 
   ohai 'reload_reload' do
     plugin 'hostname'
+=======
+  ohai 'reload_reload' do
+    plugin "hostname"
+>>>>>>> Update default recipe to reload only the hostname plugin rather than all of ohai
     action :nothing
   end
 
