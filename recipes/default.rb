@@ -117,18 +117,11 @@ if fqdn
     only_if { node['hostname_cookbook']['append_hostsfile_ip'] }
   end
 
-<<<<<<< de10895daa394d7e7b13f1810ab456f6a8e496dd
-<<<<<<< 02493c04203fb88f22eeb55a5d55930a3a155992
   ohai 'reload_hostname' do
     plugin 'hostname'
-=======
+  end
   ohai 'reload_reload' do
     plugin "hostname"
->>>>>>> Update default recipe to reload only the hostname plugin rather than all of ohai
-=======
-  ohai 'reload_hostname' do
-    plugin 'hostname'
->>>>>>> Typos
     action :nothing
   end
 else
