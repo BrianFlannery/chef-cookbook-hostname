@@ -120,6 +120,7 @@ if fqdn
   ohai 'reload_hostname' do
     plugin 'hostname'
   end
+
   ohai 'reload_reload' do
     plugin "hostname"
     action :nothing
