@@ -115,10 +115,13 @@ if fqdn
     action :create
     notifies :reload, 'ohai[reload]', :immediately
     only_if { node['hostname_cookbook']['append_hostsfile_ip'] }
+<<<<<<< 934d727d3d8084a3cd5ad8f179180719ef3b2250
   end
 
   ohai 'reload_hostname' do
     plugin 'hostname'
+=======
+>>>>>>> Boolean attribute that allows bypassing of the hosts IP to the hostsfile.
   end
 
   ohai 'reload_reload' do
