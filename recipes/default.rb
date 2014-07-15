@@ -64,27 +64,6 @@ if fqdn
       action :nothing
     end
     hostfile = '/etc/sysconfig/network'
-<<<<<<< 02493c04203fb88f22eeb55a5d55930a3a155992
-    file hostfile do
-      action :create
-      content lazy {
-        ::IO.read(hostfile).gsub(/^HOSTNAME=.*$/, "HOSTNAME=#{fqdn}")
-      }
-      not_if { ::IO.read(hostfile) =~ /^HOSTNAME=#{fqdn}$/ }
-      notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
-    end
-    # this is to persist the correct hostname after machine reboot
-    sysctl = '/etc/sysctl.conf'
-    file sysctl do
-      action :create
-      content lazy {
-        ::IO.read(sysctl) + "kernel.hostname=#{hostname}\n"
-      }
-      not_if { ::IO.read(sysctl) =~ /^kernel\.hostname=#{hostname}$/ }
-      notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
-=======
     ruby_block "Update #{hostfile}" do
       block do
         file = Chef::Util::FileEdit.new(hostfile)
@@ -103,7 +82,6 @@ if fqdn
         file.write_file
       end
       notifies :reload, 'ohai[reload_hostname]', :immediately
->>>>>>> Update default recipe to reload only the hostname plugin rather than all of ohai
     end
     execute "hostname #{hostname}" do
       only_if { node['hostname'] != hostname }
@@ -136,16 +114,15 @@ if fqdn
     unique true
     action :create
     notifies :reload, 'ohai[reload_hostname]', :immediately
+    # notifies :reload, 'ohai[reload]', :immediately
     only_if { node['hostname_cookbook']['append_hostsfile_ip'] }
   end
 
-<<<<<<< 02493c04203fb88f22eeb55a5d55930a3a155992
   ohai 'reload_hostname' do
     plugin 'hostname'
-=======
+  end
   ohai 'reload_reload' do
     plugin "hostname"
->>>>>>> Update default recipe to reload only the hostname plugin rather than all of ohai
     action :nothing
   end
 else
