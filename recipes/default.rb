@@ -123,7 +123,7 @@ if fqdn
   end
 
   ohai 'reload_reload' do
-    plugin "hostname"
+    plugin 'hostname'
     action :nothing
   end
 
