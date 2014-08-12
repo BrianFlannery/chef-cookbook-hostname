@@ -121,10 +121,12 @@ if fqdn
   ohai 'reload_hostname' do
     plugin 'hostname'
   end
+
   ohai 'reload_reload' do
     plugin "hostname"
     action :nothing
   end
+
 else
   log 'Please set the set_fqdn attribute to desired hostname' do
     level :warn
