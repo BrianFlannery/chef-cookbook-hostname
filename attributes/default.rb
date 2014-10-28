@@ -5,4 +5,3 @@ default['hostname_cookbook']['hostsfile_ip_interface'] = 'lo0' if platform == 'f
 default['hostname_cookbook']['append_hostsfile_ip'] = true
 default['hostname_cookbook']['hostsfile_aliases'] = []
 default['hostname_cookbook']['hostsfile_include_hostname_in_aliases'] = true
-
