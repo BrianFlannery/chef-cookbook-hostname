@@ -110,12 +110,8 @@ if fqdn
   hostsfile_entry 'set hostname' do
     ip_address node['hostname_cookbook']['hostsfile_ip']
     hostname fqdn
-<<<<<<< 2975fae2fd5e818dd886212f5e7372d494e5b700
     aliases aliases
     # aliases [hostname]
-=======
-    aliases [hostname]
->>>>>>> Set unique hosts file entry for hostname
     unique true
     action :create
     notifies :reload, 'ohai[reload_hostname]', :immediately
