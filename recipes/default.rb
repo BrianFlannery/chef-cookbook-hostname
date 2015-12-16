@@ -71,7 +71,8 @@ if fqdn
       }
       not_if { ::IO.read(hostfile) =~ /^HOSTNAME=#{fqdn}$/ }
       notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
+      # notifies :restart, 'service[network]', :delayed
+      notifies :run, 'ruby_block[maybe_restart_network]', :delayed
     end
     # this is to persist the correct hostname after machine reboot
     sysctl = '/etc/sysctl.conf'
@@ -82,14 +83,22 @@ if fqdn
       }
       not_if { ::IO.read(sysctl) =~ /^kernel\.hostname=#{hostname}$/ }
       notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
+      # notifies :restart, 'service[network]', :delayed
+      notifies :run, 'ruby_block[maybe_restart_network]', :delayed
     end
     execute "hostname #{hostname}" do
       only_if { node['hostname'] != hostname }
       notifies :reload, 'ohai[reload_hostname]', :immediately
     end
     service 'network' do
-      action :restart
+      # action :restart
+      action :nothing
+    end
+    ruby_block 'maybe_restart_network' do
+      block do
+      end
+      notifies :restart, 'service[network]', :delayed
+      not_if { node['hostname_cookbook']['dont_restart_network'] }
     end
   else
     file '/etc/hostname' do
